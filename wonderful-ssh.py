@@ -1,16 +1,18 @@
 #!/usr/bin/python3
 import json
+import click
 from subprocess import call
-
-
-def main():
-    """Cross-platform program written in Python3 to manage SSH Hosts."""
-    connect("OpenSUSE")
 
 
 __author__ = "Multipixelone"
 
+@click.group()
+def main():
+    """Cross-platform program written in Python3 to manage SSH Hosts."""
+    pass
 
+@main.command()
+@click.argument('server')
 def connect(server):
     """Connect to host via SSH."""
     with open('store.json') as store:
@@ -32,6 +34,18 @@ def connect(server):
         call(["ssh", "-i" + key, login + "@" + address])
     else:
         call(["ssh", login + "@" + address])
+
+
+@main.command()
+def list():
+    """List configured hosts."""
+    with open('store.json') as store:
+        d = json.load(store)
+        global hosts
+        hosts = d['hosts']
+    global servers
+    servers = hosts['hosts']
+    print(hosts)
 
 
 if __name__ == "__main__":
