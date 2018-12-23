@@ -1,3 +1,4 @@
 json
 click
 subprocess
+tabulate

@@ -2,7 +2,7 @@
 import json
 import click
 from subprocess import call
-
+import tabulate as tab
 
 __author__ = "Multipixelone"
 
@@ -43,10 +43,8 @@ def list():
         d = json.load(store)
         global hosts
         hosts = d['hosts']
-    global servers
-    servers = hosts['hosts']
-    print(hosts)
-
+    #table = hosts['Name'][0]['Address'][0]['Login']
+    print(tab([['Alice', 24], ['Bob', 19]], headers=['Name', 'Age']))
 
 if __name__ == "__main__":
     main()
