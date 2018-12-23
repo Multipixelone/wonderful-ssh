@@ -2,9 +2,10 @@
 import json
 import click
 from subprocess import call
-import tabulate as tab
+
 
 __author__ = "Multipixelone"
+
 
 @click.group()
 def main():
@@ -43,8 +44,25 @@ def list():
         d = json.load(store)
         global hosts
         hosts = d['hosts']
-    #table = hosts['Name'][0]['Address'][0]['Login']
-    print(tab([['Alice', 24], ['Bob', 19]], headers=['Name', 'Age']))
+    print(json.dumps(hosts, indent=4, sort_keys=True))
+
+
+@main.command()
+@click.argument('Easy_Name')
+def add(easy_name):
+    """Add server to json store."""
+    pretty_name = input("What is a pretty name for your server ? ")
+    address = input("What is your server address ? ")
+    login = input("What is your login to your server ? ")
+    key = input("If you use a key, what is the path to your key ? ")
+    new = {
+    "name": pretty_name,
+    "address": address,
+    "login": login,
+    "key": key
+    }
+    with open("store.json", "w") as out_file:
+        json.dump(new, out_file)
 
 if __name__ == "__main__":
     main()
