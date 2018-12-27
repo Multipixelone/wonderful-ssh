@@ -58,7 +58,6 @@ def add(easy_name):
     #new = {easy_name: {"name": pretty_name, "address": address, "login": login, "key": key}}
     # new = {"falcon": {"name": "Falcon", "address": "192.168.123.123", "login": "tunnel", "key": ""},
     darray = {}
-    darray = 
     darray['name'] = pretty_name
     darray['address'] = address
     darray['login'] = login
