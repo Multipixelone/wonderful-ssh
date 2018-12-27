@@ -55,26 +55,6 @@ def add(easy_name):
     address = input("What is your server address ? ")
     login = input("What is your login to your server ? ")
     key = input("If you use a key, what is the path to your key ? ")
-    #new = {easy_name: {"name": pretty_name, "address": address, "login": login, "key": key}}
-    # new = {"falcon": {"name": "Falcon", "address": "192.168.123.123", "login": "tunnel", "key": ""},
-    darray = {}
-    darray['name'] = pretty_name
-    darray['address'] = address
-    darray['login'] = login
-    darray['key'] = key
-    new = json.dumps(darray)
-    print(new)
-    with open("store.json", "ab+") as f:
-        f.seek(0, 2)
-        if f.tell() == 0:
-            f.write(json.dumps([new]).encode())
-        else:
-            f.seek(-4, 2)
-            f.truncate()
-            f.write(','.encode())
-            f.seek(-1, 2)
-            f.write(json.dumps(new, indent=4, sort_keys=True).encode())
-            f.write('}'.encode())
-
+    servers = {"server": pretty_name, "address": address, "login": login, "key": key}
 if __name__ == "__main__":
     main()
