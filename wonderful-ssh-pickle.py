@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import csv
+import json
 import click
 from subprocess import call
 
@@ -16,23 +16,20 @@ def main():
 @click.argument('server')
 def connect(server):
     """Connect to host via SSH."""
-    with open('store.csv') as store:
-        d = csv.reader(store)
-        for row in d:
-            global hosts
-            hosts = []
-            hosts.append(row[0])
-    print(hosts)
-    #global host
-    #global name
-    #global address
-    #global login
-    #global key
-    #host = hosts[server]
-    #name = host['name']
-    #address = host['address']
-    #login = host['login']
-    #key = host['key']
+    with open('store.json') as store:
+        d = json.load(store)
+        global hosts
+        hosts = d['hosts']
+    global host
+    global name
+    global address
+    global login
+    global key
+    host = hosts[server]
+    name = host['name']
+    address = host['address']
+    login = host['login']
+    key = host['key']
     print("Connecting to " + name + " at " + address + " using username " + login)
     if host['key']:
         call(["ssh", "-i" + key, login + "@" + address])
@@ -61,6 +58,7 @@ def add(easy_name):
     #new = {easy_name: {"name": pretty_name, "address": address, "login": login, "key": key}}
     # new = {"falcon": {"name": "Falcon", "address": "192.168.123.123", "login": "tunnel", "key": ""},
     darray = {}
+    darray = 
     darray['name'] = pretty_name
     darray['address'] = address
     darray['login'] = login
