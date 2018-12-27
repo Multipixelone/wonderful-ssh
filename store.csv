@@ -1,0 +1,5 @@
+falcon,OpenSUSE
+Falcon,OpenSUSE
+192.168.123.123,ec2-18-236-109-102.us-west-2.compute.amazonaws.com
+tunnel,ec2-user
+,keys/Main.pem
