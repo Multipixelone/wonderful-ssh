@@ -21,7 +21,6 @@ def connect(server):
     c.execute("SELECT * FROM servers WHERE host LIKE '%s'" % server)
     #host c.fetchone())
     host = c.fetchone()
-    print(host)
     #global name
     #global address
     #global login
