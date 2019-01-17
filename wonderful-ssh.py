@@ -47,20 +47,20 @@ def connect(server):
     if host[4]:
         try:
             subprocess.run(["ssh", "-i" + key, login + "@" + address], check=True)
-            break
+            pass
         except EOFError:
             state = "ERRORED"
-            break
+            pass
         c.execute("INSERT INTO log VALUES (?, ?, ?, ?)", (time, type, address, state))
         conn.commit()
         conn.close()
     else:
         try:
             subprocess.call(["ssh", login + "@" + address])
-            break
+            pass
         except EOFError:
             state = "ERRORED"
-            break
+            pass
         c.execute("INSERT INTO log VALUES (?, ?, ?, ?)", (time, type, address, state))
         conn.commit()
         conn.close()
