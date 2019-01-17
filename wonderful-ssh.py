@@ -12,6 +12,7 @@ def main():
     """Cross-platform program written in Python3 to manage SSH Hosts."""
     pass
 
+
 @main.command()
 @click.argument('server')
 def connect(server):
