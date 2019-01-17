@@ -1,4 +1,2 @@
-json
+sqlite3
 click
-subprocess
-tabulate
