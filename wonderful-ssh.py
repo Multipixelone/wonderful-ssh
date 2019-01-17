@@ -25,13 +25,32 @@ def connect(server):
     login = host[3]
     key = host[4]
     print("Connecting to " + name + " at " + address + " using username " + login)
+    type = "CONNECT"
+    time = datetime.datetime.now().strftime("%Y-%m-%d %l:%M:%S")
+    state = "good"
+    print(time)
+    c.execute('''CREATE TABLE IF NOT EXISTS log
+            (time text, type text, value text, state text)''')
+    conn.commit()
     if host[4]:
-        call(["ssh", "-i" + key, login + "@" + address])
+        try:
             subprocess.run(["ssh", "-i" + key, login + "@" + address], check=True)
+            break
+        except EOFError:
+            state = "ERRORED"
+            break
+        c.execute("INSERT INTO log VALUES (?, ?, ?, ?)", (time, type, address, state))
+        conn.commit()
         conn.close()
     else:
-        call(["ssh", login + "@" + address])
+        try:
             subprocess.call(["ssh", login + "@" + address])
+            break
+        except EOFError:
+            state = "ERRORED"
+            break
+        c.execute("INSERT INTO log VALUES (?, ?, ?, ?)", (time, type, address, state))
+        conn.commit()
         conn.close()
 
 
@@ -95,6 +114,16 @@ def search(server):
     #c.execute('SELECT * FROM servers WHERE host=?', server)
     print(c.fetchone())
     conn.close()
+
+@main.command()
+def log():
+    """List configured hosts."""
+    conn = sqlite3.connect('store.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM log")
+    print(c.fetchall())
+    conn.close()
+
 
 if __name__ == "__main__":
     main()
