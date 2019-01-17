@@ -62,6 +62,9 @@ def remove(server):
     """Connect to host via SSH."""
     conn = sqlite3.connect('store.db')
     c = conn.cursor()
+    #c.execute("DELETE FROM servers WHERE host = \"'%s'\"" % server)
+    c.execute("DELETE FROM servers WHERE host = \"(?)\"",
+        (server))
     conn.commit()
     conn.close()
 
