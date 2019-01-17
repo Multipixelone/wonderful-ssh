@@ -4,13 +4,20 @@ import click
 import subprocess
 import datetime
 import os
+from os.path import expanduser
+
 
 __author__ = "Multipixelone"
+folder = expanduser("~/.config/wonderful-ssh")
+config = expanduser("~/.config/wonderful-ssh/store.db")
 
 
 @click.group()
 def main():
     """Cross-platform program written in Python3 to manage SSH Hosts."""
+    if not os.path.isdir(folder):
+            os.makedirs(folder)
+            print("Config directory %s was created." % folder)
     pass
 
 
