@@ -25,7 +25,10 @@ def main():
 @click.argument('server')
 def connect(server):
     """Connect to host via SSH."""
-    conn = sqlite3.connect('store.db')
+    if os.name == "nt":
+        conn = sqlite3.connect('store.db')
+    else:
+        conn = sqlite3.connect(config)
     c = conn.cursor()
     c.execute("SELECT * FROM servers WHERE host LIKE '%s'" % server)
     host = c.fetchone()
@@ -67,7 +70,10 @@ def connect(server):
 @click.argument('server')
 def remove(server):
     """Connect to host via SSH."""
-    conn = sqlite3.connect('store.db')
+    if os.name == "nt":
+        conn = sqlite3.connect('store.db')
+    else:
+        conn = sqlite3.connect(config)
     c = conn.cursor()
     #c.execute("DELETE FROM servers WHERE host = \"'%s'\"" % server)
     c.execute("DELETE FROM servers WHERE host = \"(?)\"",
@@ -80,7 +86,10 @@ def remove(server):
 @click.argument('Easy_Name')
 def add(easy_name):
     """Add server to json store."""
-    conn = sqlite3.connect('store.db')
+    if os.name == "nt":
+        conn = sqlite3.connect('store.db')
+    else:
+        conn = sqlite3.connect(config)
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS servers
                 (host text, name text, address text, login text, key text)''')
@@ -96,7 +105,10 @@ def add(easy_name):
 @main.command()
 def list():
     """List configured hosts."""
-    conn = sqlite3.connect('store.db')
+    if os.name == "nt":
+        conn = sqlite3.connect('store.db')
+    else:
+        conn = sqlite3.connect(config)
     c = conn.cursor()
     c.execute("SELECT * FROM servers")
     print(c.fetchall())
@@ -107,7 +119,10 @@ def list():
 @click.argument('Server')
 def show(server):
     """Show defined servers."""
-    conn = sqlite3.connect('store.db')
+    if os.name == "nt":
+        conn = sqlite3.connect('store.db')
+    else:
+        conn = sqlite3.connect(config)
     c = conn.cursor()
     c.execute("SELECT * FROM servers WHERE host LIKE '%s'" % server)
     #c.execute('SELECT * FROM servers WHERE host=?', server)
@@ -119,7 +134,10 @@ def show(server):
 @click.argument('Name')
 def search(server):
     """Show defined servers."""
-    conn = sqlite3.connect('store.db')
+    if os.name == "nt":
+        conn = sqlite3.connect('store.db')
+    else:
+        conn = sqlite3.connect(config)
     c = conn.cursor()
     c.execute('SELECT * FROM servers WHERE host LIKE %?%', server)
     #c.execute('SELECT * FROM servers WHERE host=?', server)
@@ -130,7 +148,10 @@ def search(server):
 @main.command()
 def log():
     """List configured hosts."""
-    conn = sqlite3.connect('store.db')
+    if os.name == "nt":
+        conn = sqlite3.connect('store.db')
+    else:
+        conn = sqlite3.connect(config)
     c = conn.cursor()
     c.execute("SELECT * FROM log")
     print(c.fetchall())
