@@ -19,14 +19,7 @@ def connect(server):
     conn = sqlite3.connect('store.db')
     c = conn.cursor()
     c.execute("SELECT * FROM servers WHERE host LIKE '%s'" % server)
-    #host c.fetchone())
     host = c.fetchone()
-    #global name
-    #global address
-    #global login
-    #global key
-    #host[0] = host
-    #host[2] = address
     name = host[1]
     address = host[2]
     login = host[3]
