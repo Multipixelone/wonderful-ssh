@@ -41,6 +41,7 @@ def connect(server):
             subprocess.call(["ssh", login + "@" + address])
         conn.close()
 
+
 @main.command()
 @click.argument('server')
 def remove(server):
@@ -50,6 +51,7 @@ def remove(server):
     c.execute("DELETE FROM servers WHERE host = \"'%s'\"" % server)
     conn.commit()
     conn.close()
+
 
 @main.command()
 @click.argument('Easy_Name')
@@ -67,6 +69,7 @@ def add(easy_name):
     conn.commit()
     conn.close()
 
+
 @main.command()
 def list():
     """List configured hosts."""
@@ -75,6 +78,7 @@ def list():
     c.execute("SELECT * FROM servers")
     print(c.fetchall())
     conn.close()
+
 
 @main.command()
 @click.argument('Server')
@@ -86,6 +90,7 @@ def show(server):
     #c.execute('SELECT * FROM servers WHERE host=?', server)
     print(c.fetchone())
     conn.close()
+
 
 @main.command()
 @click.argument('Name')
