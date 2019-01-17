@@ -115,6 +115,7 @@ def search(server):
     print(c.fetchone())
     conn.close()
 
+
 @main.command()
 def log():
     """List configured hosts."""
