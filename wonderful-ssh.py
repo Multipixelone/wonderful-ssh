@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import sqlite3
 import click
-from subprocess import call
+import subprocess
 
 
 __author__ = "Multipixelone"
@@ -34,9 +34,11 @@ def connect(server):
     print("Connecting to " + name + " at " + address + " using username " + login)
     if host[4]:
         call(["ssh", "-i" + key, login + "@" + address])
+            subprocess.run(["ssh", "-i" + key, login + "@" + address], check=True)
         conn.close()
     else:
         call(["ssh", login + "@" + address])
+            subprocess.call(["ssh", login + "@" + address])
         conn.close()
 
 @main.command()
